@@ -121,27 +121,26 @@ def start_training(char_name: str, char_class: str) -> str:
     return 'Тренировка окончена.'
 
 
-def choice_char_class() -> str:
-    """Responsible for character choice."""
-    approve_choice: None = None
-    char_class: None = None
+def choice_char_class(char_name: str) -> Character:
+    """
+    Возвращает строку с выбранным
+    классом персонажа.
+    """
+    # Добавили словарь, в котором соотносится ввод пользователя и класс персонажа.
+    game_classes = {'warrior': Warrior, 'mage': Mage, 'healer': Healer}
+
+    approve_choice: str = None
+
     while approve_choice != 'y':
-        char_class: str = input('Введи название персонажа, '
-                                'за которого хочешь играть: '
-                                'Воитель — warrior, '
-                                'Маг — mage, Лекарь — healer: ')
-        if char_class == 'warrior':
-            print('Воитель — дерзкий воин ближнего боя. '
-                  'Сильный, выносливый и отважный.')
-        if char_class == 'mage':
-            print('Маг — находчивый воин дальнего боя. '
-                  'Обладает высоким интеллектом.')
-        if char_class == 'healer':
-            print('Лекарь — могущественный заклинатель. '
-                  'Черпает силы из природы, веры и духов.')
-        approve_choice: str = input('Нажми (Y), чтобы подтвердить выбор, '
-                                    'или любую другую кнопку, '
-                                    'чтобы выбрать другого персонажа ').lower()
+        selected_class = input('Введи название персонажа, '
+                               'за которого хочешь играть: Воитель — warrior, '
+                               'Маг — mage, Лекарь — healer: ')
+        char_class: Character = game_classes[selected_class](char_name)
+        # Вывели в терминал описание персонажа.
+        print(char_class)
+        approve_choice = input('Нажми (Y), чтобы подтвердить выбор, '
+                               'или любую другую кнопку, '
+                               'чтобы выбрать другого персонажа ').lower()
     return char_class
 
 
